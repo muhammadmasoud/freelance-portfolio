@@ -169,9 +169,6 @@ const Portfolio = () => {
                         >
                           <ZoomIn className="h-4 w-4" />
                         </button>
-                        <button className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors">
-                          <ExternalLink className="h-4 w-4" />
-                        </button>
                       </div>
                     </div>
                   </div>
