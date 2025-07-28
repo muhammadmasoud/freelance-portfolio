@@ -24,7 +24,7 @@ const SocialLinks = () => {
   ];
 
   return (
-    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 space-y-3 animate-fade-in-right">
+    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 animate-fade-in-right flex flex-col space-y-3 md:space-y-0 md:flex-col-none">
       {socialLinks.map((link, index) => (
         <Button
           key={link.name}
