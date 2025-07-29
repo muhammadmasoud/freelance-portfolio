@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ZoomIn } from "lucide-react";
 import { useState } from "react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 // Import portfolio images
 import portfolio1 from "@/assets/images/portfolio-1.jpg";
@@ -19,6 +20,8 @@ import portfolio12 from "@/assets/images/portfolio-12.jpg";
 
 const Portfolio = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [headerRef, headerVisible] = useScrollAnimation(0.3);
+  const [gridRef, gridVisible] = useScrollAnimation(0.2);
 
   const projects = [
     {
@@ -118,7 +121,12 @@ const Portfolio = () => {
     <section id="portfolio" className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-1000 ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 animate-float">
             My <span className="text-primary drop-shadow-glow animate-pulse-slow">Portfolio</span>
           </h2>
@@ -127,7 +135,9 @@ const Portfolio = () => {
           </p>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className={`flex flex-wrap justify-center gap-3 transition-all duration-800 delay-300 ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}>
             {categories.map((category) => (
               <Badge
                 key={category}
@@ -146,12 +156,21 @@ const Portfolio = () => {
         </div>
 
         {/* Portfolio Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div 
+          ref={gridRef}
+          className={`grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 transition-all duration-1000 ${
+            gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           {filteredProjects.map((project, index) => (
             <Card 
               key={project.id}
-              className="group hover:shadow-elegant transition-all duration-500 hover:scale-105 border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden animate-scale-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`group hover:shadow-elegant transition-all duration-500 hover:scale-105 border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden ${
+                gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
+              style={{ 
+                transitionDelay: gridVisible ? `${index * 0.1}s` : '0s'
+              }}
             >
               <CardContent className="p-0">
                 <div className="relative overflow-hidden">

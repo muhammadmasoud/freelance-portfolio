@@ -6,9 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Contact = () => {
   const { toast } = useToast();
+  const [headerRef, headerVisible] = useScrollAnimation(0.3);
+  const [formRef, formVisible] = useScrollAnimation(0.3);
+  const [infoRef, infoVisible] = useScrollAnimation(0.3);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -82,7 +87,12 @@ const Contact = () => {
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-1000 ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 animate-float">
             Get In <span className="text-primary drop-shadow-glow animate-pulse-slow">Touch</span>
           </h2>
@@ -93,7 +103,12 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card className="animate-fade-in-left border-border/50 bg-card/80 backdrop-blur-sm shadow-elegant">
+          <Card 
+            ref={formRef}
+            className={`border-border/50 bg-card/80 backdrop-blur-sm shadow-elegant transition-all duration-1000 delay-300 ${
+              formVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+            }`}
+          >
             <CardHeader>
               <CardTitle className="text-2xl text-foreground">Send Message</CardTitle>
             </CardHeader>
@@ -163,7 +178,12 @@ const Contact = () => {
           </Card>
 
           {/* Contact Information */}
-          <div className="space-y-8 animate-fade-in-right">
+          <div 
+            ref={infoRef}
+            className={`space-y-8 transition-all duration-1000 delay-500 ${
+              infoVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+            }`}
+          >
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Contact Information</h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
@@ -177,8 +197,12 @@ const Contact = () => {
               {contactInfo.map((item, index) => (
                 <Card 
                   key={index}
-                  className="p-4 hover:shadow-elegant transition-all duration-300 hover:scale-105 border-border/50 bg-card/50 backdrop-blur-sm"
-                  style={{ animationDelay: `${index * 0.2}s` }}
+                  className={`p-4 hover:shadow-elegant transition-all duration-300 hover:scale-105 border-border/50 bg-card/50 backdrop-blur-sm ${
+                    infoVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+                  }`}
+                  style={{ 
+                    transitionDelay: infoVisible ? `${index * 0.2 + 0.7}s` : '0s'
+                  }}
                 >
                   <CardContent className="p-0">
                     <a 

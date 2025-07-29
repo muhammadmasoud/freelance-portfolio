@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Download } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Hero = () => {
+  const [textRef, textVisible] = useScrollAnimation(0.5);
+  const [imageRef, imageVisible] = useScrollAnimation(0.5);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -12,7 +16,7 @@ const Hero = () => {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero">
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="text-colabsolute inset-0 overflow-hidden">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-primary/10 rounded-full animate-pulse-slow"></div>
         <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-accent/10 rounded-full animate-pulse-slow delay-1000"></div>
       </div>
@@ -20,7 +24,12 @@ const Hero = () => {
       <div className="container mx-auto px-6 z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="text-center md:text-left animate-fade-in-left">
+          <div 
+            ref={textRef}
+            className={`text-center md:text-left transition-all duration-1200 ${
+              textVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+            }`}
+          >
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
               Muhammad Ali
               <span className="block text-accent">Aboelhamd Ali</span>
@@ -56,7 +65,12 @@ const Hero = () => {
           </div>
           
           {/* Profile Image */}
-          <div className="flex justify-center animate-fade-in-right">
+          <div 
+            ref={imageRef}
+            className={`flex justify-center transition-all duration-1200 delay-300 ${
+              imageVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+            }`}
+          >
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-accent rounded-full blur-xl opacity-30 animate-pulse-slow"></div>
               <div className="relative w-80 h-80 rounded-full overflow-hidden border-4 border-white/20 shadow-elegant animate-float">
